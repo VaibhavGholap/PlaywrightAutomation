@@ -1,0 +1,32 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Playwright files
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Allure report files
+allure-results/
+allure-report/
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+desktop.ini
+$RECYCLE.BIN/
+
+# Editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Local test config / private data (optional, but keep in mind if credentials change)
+# .env
