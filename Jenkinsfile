@@ -28,6 +28,7 @@ pipeline {
             steps {
                 sh '''
                     npm run test:regression
+                    npx playwright test --reporter=html
                 '''
             }
         }
@@ -35,6 +36,14 @@ pipeline {
 
     post {
         always {
+            publishHTML(target: [
+            allowMissing: false,
+            alwaysLinkToLastBuild: true,
+            keepAll: true,
+            reportDir: 'playwright-report',
+            reportFiles: 'index.html',
+            reportName: 'Playwright HTML Report'
+        ])
             archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
             archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
             archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
