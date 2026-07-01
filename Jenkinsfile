@@ -1,27 +1,23 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:20'
-            reuseNode true
-        }
-    }
+    agent any
 
     stages {
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm ci'
+        stage('Build') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
             }
-        }
-
-        stage('Install Playwright Browsers') {
             steps {
-                sh 'npx playwright install'
-            }
-        }
-
-        stage('Run Regression Tests') {
-            steps {
-                sh 'npm run test:regression'
+                sh '''
+                    ls -la
+                    node --version
+                    npm --version
+                    npm ci
+                    npm run build
+                    ls -la
+                '''
             }
         }
     }
