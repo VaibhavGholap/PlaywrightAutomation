@@ -5,7 +5,7 @@ pipeline {
         stage('Run Playwright Tests') {
             agent {
                 docker {
-                    image 'node:18-alpine'
+                    image 'mcr.microsoft.com/playwright:v1.55.0-noble'
                     reuseNode true
                 }
             }
