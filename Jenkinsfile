@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Run Playwright Tests') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -15,8 +15,8 @@ pipeline {
                     node --version
                     npm --version
                     npm ci
-                    npm run build
-                    ls -la
+                    npx playwright install
+                    npm run test:regression
                 '''
             }
         }
