@@ -5,7 +5,7 @@ pipeline {
         stage('Install Dependencies') {
             agent {
                 docker {
-                    image 'mcr.microsoft.com/playwright:v1.52.0-jammy'
+                    image 'mcr.microsoft.com/playwright:v1.61.1-jammy'
                     reuseNode true
                 }
             }
