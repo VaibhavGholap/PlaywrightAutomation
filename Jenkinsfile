@@ -28,7 +28,7 @@ pipeline {
             steps {
                 sh '''
                     npm run test:regression
-                    npx playwright test --reporter=html
+                    npx playwright test
                 '''
             }
         }

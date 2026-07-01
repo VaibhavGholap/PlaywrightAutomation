@@ -5,7 +5,7 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   //retries: process.env.CI ? 2 : 0,
-  retries:1,
+  retries: 1,
   //workers: process.env.CI ? 1 : undefined,
   workers: 1,
 
@@ -13,7 +13,8 @@ export default defineConfig({
     ['html'],
     ['allure-playwright'],
     //['dot'],
-    ['list']
+    ['list'],
+    ['junit', { outputFile: 'test-results/junit.xml' }]
   ],
 
   use: {
@@ -29,7 +30,7 @@ export default defineConfig({
   //grep: /@master/,
 
   projects: [
-   {
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
