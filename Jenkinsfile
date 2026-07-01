@@ -2,22 +2,33 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Install Dependencies') {
             agent {
                 docker {
-                    image 'mcr.microsoft.com/playwright:v1.52.0-noble'
+                    image 'mcr.microsoft.com/playwright:v1.52.0-jammy'
                     reuseNode true
                 }
             }
             steps {
                 sh '''
-                    ls -la
                     node --version
                     npm --version
+
                     npm ci
-                    npm run build
-                    ls -la
+                    npx playwright install --with-deps
                 '''
+            }
+        }
+
+        stage('Run Tests') {
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.52.0-jammy'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh 'npm run test:regression'
             }
         }
     }
