@@ -1,8 +1,25 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:20'
+            reuseNode true
+        }
+    }
 
     stages {
-        stage('Build') {
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm ci'
+            }
+        }
+
+        stage('Install Playwright Browsers') {
+            steps {
+                sh 'npx playwright install'
+            }
+        }
+
+        stage('Run Regression Tests') {
             steps {
                 sh 'npm run test:regression'
             }
