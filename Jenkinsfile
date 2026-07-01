@@ -13,14 +13,12 @@ pipeline {
                 sh '''
                     node --version
                     npm --version
-
                     npm ci
-                    npx playwright install --with-deps
                 '''
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Playwright Tests') {
             agent {
                 docker {
                     image 'mcr.microsoft.com/playwright:v1.52.0-jammy'
@@ -28,8 +26,18 @@ pipeline {
                 }
             }
             steps {
-                sh 'npm run test:regression'
+                sh '''
+                    npm run test:regression
+                '''
             }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'allure-results/**', allowEmptyArchive: true
         }
     }
 }
